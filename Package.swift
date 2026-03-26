@@ -31,7 +31,11 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/huggingface/swift-transformers.git", .upToNextMinor(from: "1.1.6")),
+        .package(url: "https://github.com/huggingface/swift-transformers.git", exact: "1.2.0"),
+        // swift-transformers 1.2.0 resolves swift-huggingface 0.9.0 on Swift 6.3,
+        // which fails package resolution due traits support. Pin 0.8.1 until
+        // upgrading to a newer swift-transformers release.
+        .package(url: "https://github.com/huggingface/swift-huggingface.git", exact: "0.8.1"),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.3.0"),
     ] + (isServerEnabled() ? [
         .package(url: "https://github.com/vapor/vapor.git", from: "4.115.1"),
@@ -45,6 +49,7 @@ let package = Package(
             name: "ArgmaxCore",
             dependencies: [
                 .product(name: "Hub", package: "swift-transformers"),
+                .product(name: "HuggingFace", package: "swift-huggingface"),
             ]
         ),
         .target(

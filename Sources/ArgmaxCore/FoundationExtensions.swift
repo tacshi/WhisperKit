@@ -8,7 +8,7 @@ import Foundation
 public extension Float {
     /// Rounds to the specified number of decimal places.
     func rounded(_ decimalPlaces: Int) -> Float {
-        let divisor = pow(10.0, Float(decimalPlaces))
+        let divisor = Float(Foundation.pow(10.0, Double(decimalPlaces)))
         return (self * divisor).rounded() / divisor
     }
 }
